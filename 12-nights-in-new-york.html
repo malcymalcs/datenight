@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#16121f" />
+<title>12 Nights in New York</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16121f;
+    --ink-2:#1f1930;
+    --gold:#d3ae76;
+    --gold-soft:#e8cf9f;
+    --blush:#e2a3ac;
+    --ivory:#f4ecdf;
+    --mauve:#8d7a96;
+    --paper:#f7f1e4;
+    --paper-shadow:#e3d7c0;
+    --wax:#8e2f3c;
+    --wax-dark:#6d1f2b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;background:var(--ink);color-scheme:dark;}
+  body{
+    background:var(--ink);
+    color:var(--ivory);
+    font-family:'Jost',sans-serif;
+    font-weight:300;
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-tap-highlight-color:transparent;
+    -webkit-text-size-adjust:100%;
+  }
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    background:
+      radial-gradient(ellipse 60vw 45vh at 80% -10%, rgba(211,174,118,.10), transparent 60%),
+      radial-gradient(ellipse 50vw 38vh at 10% 110%, rgba(226,163,172,.07), transparent 60%);
+    pointer-events:none;
+    z-index:0;
+  }
+  .wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- Invitation cover ---------- */
+  .cover{
+    position:fixed;inset:0;
+    background:
+      radial-gradient(ellipse 800px 540px at 50% 20%, rgba(211,174,118,.08), transparent 60%),
+      var(--ink);
+    z-index:100;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;
+    padding:32px;
+    transition:opacity .9s ease, visibility .9s ease;
+  }
+  .cover.open{opacity:0;visibility:hidden;pointer-events:none;}
+  .cover-kicker{
+    font-size:11px;letter-spacing:.42em;text-transform:uppercase;
+    color:var(--gold);font-weight:500;
+    margin-bottom:22px;
+  }
+  .cover h2{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:500;font-style:italic;
+    font-size:clamp(34px,6.4vw,58px);
+    line-height:1.15;
+    color:var(--ivory);
+    max-width:14ch;
+  }
+  .cover-rule{
+    width:52px;height:1px;
+    background:rgba(211,174,118,.5);
+    margin:30px 0 34px;
+  }
+  .cover-seal{
+    width:84px;height:84px;
+    border:none;border-radius:50%;
+    cursor:pointer;
+    background:radial-gradient(circle at 32% 28%, #b04a58, var(--wax) 55%, var(--wax-dark));
+    box-shadow:0 6px 18px rgba(0,0,0,.5), inset 0 0 0 5px rgba(255,255,255,.06);
+    display:flex;align-items:center;justify-content:center;
+    animation:goldPulse 3.6s ease-in-out infinite;
+    transition:transform .4s ease, opacity .4s ease;
+  }
+  .cover-seal span{
+    font-family:'Cormorant Garamond',serif;
+    font-size:36px;color:#f3d9d9;
+    text-shadow:0 1px 3px rgba(0,0,0,.4);
+  }
+  .cover-seal:hover{transform:scale(1.06);}
+  .cover.breaking .cover-seal{transform:scale(.35) rotate(-20deg);opacity:0;}
+  .cover-hint{
+    margin-top:20px;
+    font-size:10px;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--mauve);
+  }
+
+  /* ---------- Hero ---------- */
+  header.wrap{
+    min-height:88vh;
+    min-height:88svh;
+    display:flex;flex-direction:column;justify-content:flex-start;align-items:center;
+    text-align:center;
+    padding:75px 24px 60px;
+    position:relative;
+  }
+  .eyebrow{
+    font-size:12px;letter-spacing:.42em;text-transform:uppercase;
+    color:var(--gold);font-weight:500;
+    margin-bottom:12px;
+  }
+  .eyebrow .x{
+    color:var(--blush);
+    font-weight:400;
+    padding:0 2px;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:500;
+    font-size:clamp(44px,8vw,84px);
+    line-height:1.04;
+    letter-spacing:.01em;
+  }
+  h1 em{
+    font-style:italic;
+    color:var(--gold-soft);
+  }
+  h1 .num{
+    font-style:italic;
+    color:var(--gold-soft);
+    font-size:1.32em;
+    line-height:.9;
+    text-shadow:0 0 40px rgba(211,174,118,.35);
+  }
+  .hero-sub{
+    margin-top:26px;
+    max-width:520px;
+    font-size:17px;
+    color:#cfc4b3;
+  }
+  .membership{
+    margin-top:48px;
+    border:1px solid rgba(211,174,118,.35);
+    border-radius:14px;
+    padding:22px 34px;
+    display:inline-flex;
+    gap:34px;
+    flex-wrap:wrap;
+    justify-content:center;
+    background:linear-gradient(160deg, rgba(211,174,118,.08), rgba(211,174,118,.02));
+    backdrop-filter:blur(4px);
+  }
+  .membership div{min-width:120px;}
+  .membership > div + div{
+    border-left:1px solid rgba(211,174,118,.25);
+    padding-left:34px;
+  }
+  @media (max-width:480px){
+    .membership{flex-direction:column;gap:14px;}
+    .membership > div + div{
+      border-left:none;
+      padding-left:0;
+      border-top:1px solid rgba(211,174,118,.25);
+      padding-top:14px;
+    }
+  }
+  .membership .k{
+    font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--mauve);
+    margin-bottom:4px;font-weight:500;
+  }
+  .membership .v{
+    font-family:'Cormorant Garamond',serif;
+    font-size:20px;font-style:italic;color:var(--gold-soft);
+  }
+  .scroll-hint{
+    margin-top:56px;
+    font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--mauve);
+    animation:drift 3s ease-in-out infinite;
+  }
+  @keyframes drift{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+
+  /* ---------- How it works ---------- */
+  .rules{
+    display:flex;gap:40px;flex-wrap:wrap;justify-content:center;
+    padding:30px 0 70px;
+    text-align:center;
+  }
+  .rules p{
+    max-width:230px;font-size:14.5px;color:#c9bdab;
+  }
+  .rules p strong{
+    display:block;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;font-weight:600;
+    font-size:21px;color:var(--ivory);
+    margin-bottom:6px;
+  }
+
+  /* ---------- Fate ---------- */
+  .fate-row{
+    text-align:center;
+    padding-bottom:44px;
+  }
+  .fate-row p{
+    font-size:11px;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--mauve);margin-bottom:14px;font-weight:500;
+  }
+  .fate-btn{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;font-weight:600;
+    font-size:21px;
+    color:var(--gold-soft);
+    background:transparent;
+    border:1px solid rgba(211,174,118,.45);
+    border-radius:999px;
+    padding:12px 38px;
+    cursor:pointer;
+    letter-spacing:.04em;
+    transition:background .3s ease, transform .3s ease;
+    animation:goldPulse 3.6s ease-in-out infinite;
+  }
+  @keyframes goldPulse{
+    0%,100%{box-shadow:0 0 16px rgba(211,174,118,.14), 0 0 0 0 rgba(211,174,118,.0);}
+    50%{box-shadow:0 0 38px rgba(211,174,118,.38), 0 0 70px rgba(211,174,118,.14);}
+  }
+  .fate-btn:hover:not(:disabled){
+    background:rgba(211,174,118,.08);
+    transform:translateY(-2px);
+  }
+  .fate-btn:disabled{opacity:.55;cursor:wait;}
+
+  .spin-overlay{
+    position:fixed;inset:0;
+    background:rgba(12,9,18,.82);
+    backdrop-filter:blur(7px);
+    display:flex;align-items:center;justify-content:center;
+    padding:22px;z-index:60;
+    opacity:0;pointer-events:none;
+    transition:opacity .3s ease;
+  }
+  .spin-overlay.open{opacity:1;pointer-events:auto;}
+  .spin-card{
+    position:relative;
+    width:min(460px,100%);
+    background:linear-gradient(165deg, var(--ink-2), #171224);
+    border:1px solid rgba(211,174,118,.35);
+    border-radius:16px;
+    padding:46px 34px 34px;
+    text-align:center;
+    box-shadow:0 0 60px rgba(211,174,118,.12), 0 30px 80px rgba(0,0,0,.6);
+    transform:translateY(20px) scale(.97);
+    transition:transform .35s cubic-bezier(.2,.8,.3,1);
+  }
+  .spin-overlay.open .spin-card{transform:translateY(0) scale(1);}
+  .spin-kicker{
+    font-size:11px;letter-spacing:.4em;text-transform:uppercase;
+    color:var(--gold);font-weight:500;margin-bottom:18px;
+  }
+  .spin-cat{
+    display:inline-block;
+    font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;font-weight:600;
+    color:var(--blush);
+    border:1px solid rgba(226,163,172,.35);
+    border-radius:999px;
+    padding:5px 14px;
+    margin-bottom:14px;
+    min-height:1em;
+    transition:opacity .3s ease;
+  }
+  .spin-cat.empty{opacity:0;}
+  .spin-name{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;font-weight:600;
+    font-size:clamp(26px,6vw,34px);
+    line-height:1.15;
+    color:var(--gold-soft);
+    min-height:2.4em;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .spin-name.rolling{opacity:.6;filter:blur(.4px);}
+  .spin-sub{
+    font-size:13px;letter-spacing:.08em;color:var(--mauve);
+    min-height:1.6em;margin-top:6px;
+  }
+  .spin-note{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:17px;line-height:1.5;
+    color:#d8cbb6;
+    min-height:2.6em;
+    margin-top:14px;
+    padding:0 8px;
+    transition:opacity .3s ease;
+  }
+  .spin-note.empty{opacity:0;}
+  .spin-actions{
+    display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+    margin-top:26px;
+  }
+  .spin-btn{
+    font-family:'Jost',sans-serif;
+    font-size:11px;letter-spacing:.26em;text-transform:uppercase;font-weight:500;
+    padding:12px 22px;border-radius:999px;cursor:pointer;
+    transition:background .25s ease, box-shadow .25s ease;
+  }
+  .spin-btn.again{
+    background:transparent;color:var(--gold-soft);
+    border:1px solid rgba(211,174,118,.45);
+  }
+  .spin-btn.again:hover{background:rgba(211,174,118,.08);}
+  .spin-btn.go{
+    background:var(--wax);color:#f6e3e3;border:1px solid var(--wax);
+    text-decoration:none;display:inline-block;
+  }
+  .spin-btn.go:hover{background:var(--wax-dark);box-shadow:0 0 24px rgba(142,47,60,.4);}
+  .spin-btn.go.hidden{opacity:.35;pointer-events:none;}
+  .spin-btn:disabled{opacity:.5;cursor:wait;}
+  .spin-close{
+    position:absolute;top:12px;right:16px;
+    background:none;border:none;cursor:pointer;
+    font-size:22px;color:var(--mauve);line-height:1;
+    padding:6px;
+  }
+  .spin-close:hover{color:var(--ivory);}
+
+  /* ---------- Envelope grid ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:26px;
+    padding-bottom:110px;
+  }
+  .env-slot{position:relative;}
+  .envelope{
+    width:100%;
+    aspect-ratio:4/3;
+    border:none;
+    cursor:pointer;
+    background:linear-gradient(170deg, var(--paper), var(--paper-shadow));
+    border-radius:8px;
+    position:relative;
+    box-shadow:0 14px 34px rgba(0,0,0,.45);
+    transition:transform .35s ease, box-shadow .35s ease;
+    overflow:visible;
+    font-family:inherit;
+    touch-action:manipulation;
+  }
+  .envelope:hover,.envelope:focus-visible{
+    transform:translateY(-6px);
+    box-shadow:0 22px 44px rgba(0,0,0,.55);
+  }
+  .envelope:focus-visible{outline:2px solid var(--gold);outline-offset:4px;}
+  .flap{
+    position:absolute;top:0;left:0;width:100%;height:52%;
+    background:linear-gradient(180deg, #efe6d2, #e0d3b8);
+    clip-path:polygon(0 0, 100% 0, 50% 100%);
+    transform-origin:top center;
+    transition:transform .7s cubic-bezier(.6,0,.3,1);
+    z-index:3;
+  }
+  .env-month{
+    position:absolute;
+    bottom:14px;left:0;width:100%;
+    text-align:center;
+    font-size:11px;letter-spacing:.36em;text-transform:uppercase;
+    color:#7a6a52;font-weight:500;
+    z-index:2;
+  }
+  .env-lines{
+    position:absolute;bottom:38px;left:50%;transform:translateX(-50%);
+    width:46%;height:2px;background:rgba(122,106,82,.28);border-radius:2px;z-index:2;
+  }
+  .env-lines::before{
+    content:"";position:absolute;top:-8px;left:12%;width:76%;height:2px;
+    background:rgba(122,106,82,.22);border-radius:2px;
+  }
+  .seal{
+    position:absolute;
+    top:44%;left:50%;
+    transform:translate(-50%,-50%);
+    width:56px;height:56px;
+    border-radius:50%;
+    background:radial-gradient(circle at 32% 28%, #b04a58, var(--wax) 55%, var(--wax-dark));
+    box-shadow:0 4px 10px rgba(0,0,0,.4), inset 0 0 0 4px rgba(255,255,255,.06);
+    display:flex;align-items:center;justify-content:center;
+    z-index:4;
+    transition:transform .5s ease, opacity .5s ease;
+  }
+  .seal span{
+    font-family:'Cormorant Garamond',serif;
+    font-size:24px;color:#f3d9d9;
+    text-shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+  .opened .flap{transform:rotateX(178deg);}
+  .opened .seal{transform:translate(-50%,-50%) scale(.4) rotate(-18deg);opacity:0;}
+  .opened.envelope{
+    background:linear-gradient(170deg, #efe7d6, #ded1b4);
+  }
+  .opened-tag{
+    position:absolute;top:10px;right:12px;
+    font-size:9px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--wax);font-weight:600;
+    opacity:0;transition:opacity .4s ease .5s;
+    z-index:5;
+  }
+  .opened .opened-tag{opacity:1;}
+
+  /* ---------- Card modal ---------- */
+  .veil{
+    position:fixed;inset:0;
+    background:rgba(12,9,18,.78);
+    backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;
+    padding:22px;
+    z-index:50;
+    opacity:0;pointer-events:none;
+    transition:opacity .35s ease;
+  }
+  .veil.show{opacity:1;pointer-events:auto;}
+  .card{
+    background:linear-gradient(168deg, var(--paper), #ece1cb);
+    color:#2c2418;
+    width:min(560px,100%);
+    max-height:88vh;
+    max-height:86dvh;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
+    border-radius:12px;
+    padding:44px 44px 38px;
+    position:relative;
+    box-shadow:0 30px 80px rgba(0,0,0,.6);
+    transform:translateY(26px) scale(.97);
+    transition:transform .4s cubic-bezier(.2,.8,.3,1);
+  }
+  .veil.show .card{transform:translateY(0) scale(1);}
+  .card::before{
+    content:"";
+    position:absolute;inset:12px;
+    border:1px solid rgba(142,47,60,.25);
+    border-radius:8px;
+    pointer-events:none;
+  }
+  .card .month-tag{
+    font-size:11px;letter-spacing:.4em;text-transform:uppercase;
+    color:var(--wax);font-weight:600;
+  }
+  .card h2{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;font-style:italic;
+    font-size:clamp(30px,5vw,40px);
+    line-height:1.12;
+    margin:10px 0 4px;
+    color:#241c10;
+  }
+  .card .venue{
+    font-size:14px;letter-spacing:.06em;color:#6d5c41;
+    margin-bottom:6px;
+  }
+  .card .venue b{font-weight:600;color:#4d3f2a;}
+  .vlink-row{margin-bottom:20px;}
+  .vlink{
+    display:inline-block;
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+    color:var(--wax);text-decoration:none;
+    border-bottom:1px solid rgba(142,47,60,.4);
+    padding-bottom:2px;
+    transition:border-color .25s ease;
+  }
+  .vlink:hover{border-color:var(--wax);}
+  .card h3{
+    font-size:11px;letter-spacing:.32em;text-transform:uppercase;
+    color:#8a7657;font-weight:600;
+    margin:20px 0 8px;
+    border-bottom:1px solid rgba(138,118,87,.25);
+    padding-bottom:6px;
+  }
+  .card ol{
+    list-style:none;counter-reset:beat;
+  }
+  .card ol li{
+    counter-increment:beat;
+    font-size:15px;
+    padding:7px 0 7px 34px;
+    position:relative;
+    color:#3a2f1f;
+  }
+  .card ol li::before{
+    content:counter(beat);
+    position:absolute;left:0;top:7px;
+    width:22px;height:22px;
+    border:1px solid var(--wax);
+    border-radius:50%;
+    color:var(--wax);
+    font-size:11px;font-weight:600;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .card .meta{
+    display:flex;gap:26px;flex-wrap:wrap;margin-top:4px;
+  }
+  .card .meta p{font-size:14.5px;color:#3a2f1f;}
+  .close-card{
+    margin-top:28px;
+    width:100%;
+    padding:13px;
+    background:var(--ink);
+    color:var(--gold-soft);
+    border:none;border-radius:8px;
+    font-family:'Jost',sans-serif;
+    font-size:12px;letter-spacing:.3em;text-transform:uppercase;font-weight:500;
+    cursor:pointer;
+    transition:background .3s ease;
+  }
+  .close-card:hover{background:#251d38;}
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center;
+    padding:0 24px 90px;
+  }
+  footer p{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;font-size:clamp(22px,3.6vw,30px);
+    color:var(--gold-soft);
+    max-width:560px;margin:0 auto;
+  }
+  footer small{
+    display:block;margin-top:18px;
+    font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--mauve);
+  }
+
+  @media (max-width:560px){
+    header.wrap{padding:64px 24px 50px;}
+    .card{padding:34px 24px 30px;}
+    .membership{gap:18px 24px;padding:18px 22px;}
+    .grid{grid-template-columns:repeat(2,1fr);gap:14px;padding-bottom:80px;}
+    .seal{width:44px;height:44px;}
+    .seal span{font-size:19px;}
+    .env-month{font-size:9px;letter-spacing:.24em;bottom:10px;}
+    .env-lines{bottom:30px;}
+    .rules{gap:26px;}
+    .veil{padding:14px;align-items:flex-end;}
+    .veil .card{border-radius:14px 14px 0 0;width:100%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="cover" id="cover">
+  <p class="cover-kicker">Invite × Only</p>
+  <h2>You are cordially invited.</h2>
+  <div class="cover-rule"></div>
+  <button class="cover-seal" id="coverSeal" aria-label="Break the seal to open your invitation"><span>♥</span></button>
+  <p class="cover-hint">Press the seal</p>
+</div>
+
+<header class="wrap">
+  <p class="eyebrow">Invite <span class="x">×</span> Only</p>
+  <h1><span class="num">12</span> Nights<br><em>in New York</em></h1>
+  <p class="hero-sub">Twelve sealed envelopes. Twelve nights across New York City. One per month - break the seal, and the evening is yours. Planned, booked, and handled. All you have to do is show up beautiful. Which you will.</p>
+  <div class="membership">
+    <div><div class="k">Member</div><div class="v">You.</div></div>
+    <div><div class="k">Nights</div><div class="v">Twelve</div></div>
+    <div><div class="k">Expires</div><div class="v">Never</div></div>
+  </div>
+  <p class="scroll-hint">↓ Break a seal</p>
+</header>
+
+<section class="wrap rules" aria-label="How it works">
+  <p><strong>One a month.</strong> When a new month begins - or on a day we crown as ours - find its envelope and break the seal.</p>
+  <p><strong>I handle everything.</strong> Reservations, tickets, timing. Your only job is to say yes.</p>
+  <p><strong>No take-backs.</strong> Once a seal breaks, that date is officially on the calendar.</p>
+  <p><strong>Any other night?</strong> Tap Tonight's Pick below, whenever the mood hits, and let the city choose for us.</p>
+</section>
+
+<main class="wrap">
+  <div class="fate-row">
+    <p>Let the city decide</p>
+    <button class="fate-btn" id="fateBtn">Tonight's Pick ✦</button>
+  </div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<div class="veil" id="veil" role="dialog" aria-modal="true" aria-labelledby="cardTitle">
+  <div class="card" id="card"></div>
+</div>
+
+<div class="spin-overlay" id="spinOverlay" role="dialog" aria-modal="true" aria-label="Tonight's pick">
+  <div class="spin-card">
+    <button class="spin-close" id="spinClose" aria-label="Close">×</button>
+    <div class="spin-kicker">Tonight's Pick</div>
+    <div class="spin-cat" id="spinCat">&nbsp;</div>
+    <div class="spin-name" id="spinName">✦</div>
+    <div class="spin-sub" id="spinSub"></div>
+    <div class="spin-note" id="spinNote"></div>
+    <div class="spin-actions">
+      <button class="spin-btn again" id="spinAgain">Spin again</button>
+      <a class="spin-btn go" id="spinGo" target="_blank" rel="noopener">Take us there ↗</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Twelve nights. One city. See you there.</p>
+  <small>With love · New York City</small>
+</footer>
+
+<script>
+const DATES = [
+  {
+    month:"September", title:"A Sail at Golden Hour",
+    venue:"Classic Harbor Line Sunset Sail", area:"Chelsea Piers, Pier 62",
+    link:"https://sail-nyc.com",
+    plan:[
+      "Board a vintage schooner as the sun starts dropping over the Hudson.",
+      "Champagne on deck while we sail past the Statue of Liberty and the skyline lights up.",
+      "Late dinner in Chelsea once we're back on land - still swaying a little."
+    ],
+    dress:"Breezy and beautiful. Bring a light layer; I'll handle the rest.",
+    pair:"Little Island - the floating park is steps from the pier. A slow loop before boarding sets the whole mood."
+  },
+  {
+    month:"October", title:"A Hidden Jazz Basement",
+    venue:"Tomi Jazz", area:"E 53rd St, Midtown - down the stairs, behind the door",
+    link:"https://tomijazz.com",
+    plan:[
+      "Slip into the basement while the first set warms up.",
+      "Japanese small plates, sake, and a table barely big enough for two - perfect.",
+      "Stay for the late set. We're in no rush."
+    ],
+    dress:"Date-night sharp. Something that belongs in low light.",
+    pair:"Grand Central's Whispering Gallery on the way - stand at opposite corners and I'll tell the wall a secret only you can hear."
+  },
+  {
+    month:"November", title:"Chef's Night - We're the Chefs",
+    venue:"CocuSocial Cooking Class", area:"Midtown / Chelsea venues - handmade pasta or dumplings, you pick",
+    link:"https://cocusocial.com/cooking-classes/NYC",
+    plan:[
+      "A hands-on couples class - aprons on, egos off.",
+      "We roll it, fill it, plate it, and absolutely take credit for it.",
+      "Wine with whatever we made. It'll be great. I checked."
+    ],
+    dress:"Comfortable - you'll be wearing an apron over it anyway. Flour is likely.",
+    pair:"A cozy wine bar near the venue for a post-class toast - chef's privilege after a shift like ours."
+  },
+  {
+    month:"December", title:"Skates, Lights & Cocoa",
+    venue:"Winter Village at Bryant Park", area:"42nd St & 6th Ave",
+    link:"https://wintervillage.org",
+    plan:[
+      "Ice skating under the lights - hold my hand, I've got you.",
+      "Holiday market lap: mulled cider, one ornament for our tree, whatever smells best.",
+      "Hot cocoa finale and a toast to the year so far."
+    ],
+    dress:"Bundle up gorgeous. Gloves that can still hold a cocoa.",
+    pair:"The Fifth Avenue holiday windows - a slow walk up to Rockefeller's tree after we skate. Peak New York winter, hand in hand."
+  },
+  {
+    month:"January", title:"Taco Night, Done Right",
+    venue:"Los Tacos No. 1", area:"Chelsea Market - then margaritas nearby",
+    link:"https://www.lostacos1.com",
+    plan:[
+      "Adobada and carne asada at the counter - one of everything, we're not choosing.",
+      "Margaritas and mezcal at a warm little spot around the corner.",
+      "Churros on the walk home. Also non-negotiable."
+    ],
+    dress:"Comfortable and cute. Salsa on the shirt is a badge of honor tonight.",
+    pair:"ARTECHOUSE - the immersive digital art space is right under Chelsea Market. Tacos, then we walk through light itself."
+  },
+  {
+    month:"February", title:"Crazy Golf, Serious Competition",
+    venue:"Swingers NoMad", area:"W 29th St, NoMad",
+    link:"https://www.swingers.club/us/locations/nyc",
+    plan:[
+      "Cocktails first - for focus.",
+      "Mini golf across the course. Winner picks dessert. Loser pays for it.",
+      "Street tacos and gloating on the walk home."
+    ],
+    dress:"Casual and confident. Trash talk optional but encouraged.",
+    pair:"K-Town, three blocks south - Korean desserts and a private karaoke room to settle whatever the golf didn't."
+  },
+  {
+    month:"March", title:"Strikes & Soul",
+    venue:"Brooklyn Bowl", area:"Wythe Ave, Williamsburg",
+    link:"https://www.brooklynbowl.com",
+    plan:[
+      "Bowling under the lights - best of two games.",
+      "Fried chicken and whatever's on tap.",
+      "If there's a live show that night, we're staying for it."
+    ],
+    dress:"Sneakers you can dance in. You'll need them for both.",
+    pair:"Westlight - the rooftop bar atop the William Vale, a short walk away. Skyline nightcap, twenty-two floors up."
+  },
+  {
+    month:"April", title:"A Museum & a Rooftop Toast",
+    venue:"The Metropolitan Museum of Art", area:"Fifth Ave, Upper East Side",
+    link:"https://www.metmuseum.org",
+    plan:[
+      "Late-morning wander through the Met - you pick the first wing, I pick the second.",
+      "Find one painting we'd steal if no one was watching.",
+      "Up to the rooftop garden bar for a drink over the Central Park treetops."
+    ],
+    dress:"Effortless summer - museum lighting loves you, and so does that rooftop.",
+    pair:"Levain Bakery on Third Ave - a warm cookie the size of your hand for the walk back through the park."
+  },
+  {
+    month:"May", title:"Art & the High Line",
+    venue:"The Whitney Museum", area:"Gansevoort St, Meatpacking District",
+    link:"https://whitney.org",
+    plan:[
+      "American art at the Whitney - terrace views included.",
+      "Walk the High Line north as the afternoon cools off.",
+      "Aperitivo in Chelsea when our feet vote to stop."
+    ],
+    dress:"Gallery casual. Comfortable shoes - we're covering ground.",
+    pair:"Chelsea's gallery row (W 20th-26th St) - free to wander, and Thursday evenings the openings pour wine."
+  },
+  {
+    month:"June", title:"A Thousand Candles",
+    venue:"Candlelight Concert · Fever", area:"Venue revealed with your ticket",
+    link:"https://candlelightexperience.com",
+    plan:[
+      "A string quartet in a room lit entirely by candlelight.",
+      "Program's a surprise - could be Vivaldi, could be your favorite artist reimagined.",
+      "Late dinner after, somewhere warm and unhurried."
+    ],
+    dress:"Elegant. This one's a dress-up night.",
+    pair:"A pre-show martini at a classic hotel bar - Bemelmans if we're uptown. Piano, murals, and us dressed like we mean it."
+  },
+  {
+    month:"July", title:"A Rowboat Built for Two",
+    venue:"Loeb Boathouse, Central Park", area:"E 72nd St entrance",
+    link:"https://thecentralparkboathouse.com",
+    plan:[
+      "Picnic in the park - I'm packing it, no peeking.",
+      "A rowboat on the lake. I row. You relax. That's the deal.",
+      "Golden hour on the water until they make us come back in."
+    ],
+    dress:"Sundress season. Bring sunglasses; I'll bring everything else.",
+    pair:"Bethesda Terrace & Fountain - a two-minute stroll from the dock, usually with a musician playing under the arches."
+  },
+  {
+    month:"August", title:"Sunset Over the Bridge",
+    venue:"DUMBO & Brooklyn Bridge Park", area:"Brooklyn waterfront",
+    link:"https://brooklynbridgepark.org",
+    plan:[
+      "Golden hour on the rocks at Pebble Beach with the skyline showing off.",
+      "Ice cream in DUMBO - one scoop each, then we trade halfway. House rules.",
+      "Walk the Brooklyn Bridge back toward the city lights."
+    ],
+    dress:"Light layers. The bridge gets breezy after dark.",
+    pair:"Jane's Carousel - the glass-boxed carousel right on the waterfront. Yes, we're riding it. Twelve months in, we've earned it."
+  }
+];
+
+const grid = document.getElementById('grid');
+const veil = document.getElementById('veil');
+const cardEl = document.getElementById('card');
+let lastFocus = null;
+
+/* ---------- Invitation cover ---------- */
+const cover = document.getElementById('cover');
+document.body.style.overflow = 'hidden';
+window.scrollTo(0, 0);
+document.getElementById('coverSeal').addEventListener('click', () => {
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced){
+    cover.classList.add('open');
+    document.body.style.overflow = '';
+    return;
+  }
+  cover.classList.add('breaking');
+  setTimeout(() => {
+    cover.classList.add('open');
+    document.body.style.overflow = '';
+  }, 420);
+});
+
+DATES.forEach((d,i)=>{
+  const slot = document.createElement('div');
+  slot.className = 'env-slot';
+  const btn = document.createElement('button');
+  btn.className = 'envelope';
+  btn.setAttribute('aria-label', d.month + ' - break the seal to reveal your date');
+  btn.innerHTML = `
+    <div class="flap"></div>
+    <div class="seal"><span>♥</span></div>
+    <div class="env-lines"></div>
+    <div class="env-month">${d.month}</div>
+    <div class="opened-tag">Seal broken</div>
+  `;
+  btn.addEventListener('click', ()=>{
+    lastFocus = btn;
+    if(!btn.classList.contains('opened')){
+      btn.classList.add('opened');
+      setTimeout(()=>showCard(d), 550);
+    } else {
+      showCard(d);
+    }
+  });
+  slot.appendChild(btn);
+  grid.appendChild(slot);
+});
+
+function showCard(d){
+  cardEl.innerHTML = `
+    <p class="month-tag">${d.month} · Date No. ${String(DATES.indexOf(d)+1).padStart(2,'0')}</p>
+    <h2 id="cardTitle">${d.title}</h2>
+    <p class="venue"><b>${d.venue}</b> · ${d.area}</p>
+    <p class="vlink-row"><a class="vlink" href="${d.link}" target="_blank" rel="noopener">Visit website ↗</a></p>
+    <h3>The Plan</h3>
+    <ol>${d.plan.map(p=>`<li>${p}</li>`).join('')}</ol>
+    <h3>Dress Code</h3>
+    <div class="meta"><p>${d.dress}</p></div>
+    <h3>Pairs Well With</h3>
+    <div class="meta"><p>${d.pair}</p></div>
+    <button class="close-card" id="closeBtn">Reseal &amp; return</button>
+  `;
+  veil.classList.add('show');
+  document.body.style.overflow='hidden';
+  cardEl.scrollTop = 0;
+  document.getElementById('closeBtn').addEventListener('click', hideCard);
+  document.getElementById('closeBtn').focus({preventScroll:true});
+}
+function hideCard(){
+  veil.classList.remove('show');
+  document.body.style.overflow='';
+  if(lastFocus){
+    lastFocus.classList.remove('opened');
+    lastFocus.focus();
+  }
+}
+veil.addEventListener('click', e=>{ if(e.target===veil) hideCard(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && veil.classList.contains('show')) hideCard(); });
+
+/* ---------- Tonight's Pick ---------- */
+const PICKS = [
+  // Michelin
+  {n:"Le Bernardin", cat:"Michelin \u2605", area:"Midtown West", note:"Eric Ripert's temple of seafood. Three stars, zero misses."},
+  {n:"Jean-Georges", cat:"Michelin \u2605", area:"Columbus Circle", note:"White-tablecloth classic looking out over Central Park."},
+  {n:"Le Coucou", cat:"Michelin \u2605", area:"SoHo", note:"French candlelight in the prettiest dining room downtown."},
+  {n:"Cote Korean Steakhouse", cat:"Michelin \u2605", area:"Flatiron", note:"A star on the door and dinner cooked right at the table."},
+  {n:"Casa Mono", cat:"Michelin \u2605", area:"Gramercy", note:"Tiny, loud, brilliant Spanish plates."},
+  {n:"Aquavit", cat:"Michelin \u2605", area:"Midtown East", note:"Two-star Scandinavian calm - a quiet flex of a dinner."},
+  {n:"Oxomoco", cat:"Michelin \u2605", area:"Greenpoint", note:"Wood-fired Mexican with a star to prove it."},
+  {n:"Aska", cat:"Michelin \u2605", area:"Williamsburg", note:"Nordic tasting menu in a moody brick hall."},
+  // Date-night icons
+  {n:"Lilia", cat:"Date-Night Icon", area:"Williamsburg", note:"The pasta people cross the river for."},
+  {n:"Via Carota", cat:"Date-Night Icon", area:"West Village", note:"A Village institution - go early, share everything."},
+  {n:"I Sodi", cat:"Date-Night Icon", area:"West Village", note:"Tuscan perfection at a whisper volume."},
+  {n:"Balthazar", cat:"Date-Night Icon", area:"SoHo", note:"Brasserie theater, running nightly since 1997."},
+  {n:"Minetta Tavern", cat:"Date-Night Icon", area:"Greenwich Village", note:"Old New York bones, steakhouse glamour."},
+  {n:"Raoul's", cat:"Date-Night Icon", area:"SoHo", note:"French bistro with a famous burger and even better lighting."},
+  {n:"The River Caf\u00e9", cat:"Date-Night Icon", area:"Brooklyn Bridge", note:"Skyline dining at water level. Jackets on."},
+  // Jazz & cocktails
+  {n:"Smalls Jazz Club", cat:"Jazz & Cocktails", area:"West Village", note:"Basement jazz until late. The real thing."},
+  {n:"Blue Note", cat:"Jazz & Cocktails", area:"Greenwich Village", note:"Legends on a stage small enough to touch."},
+  {n:"Dante", cat:"Jazz & Cocktails", area:"Greenwich Village", note:"Once named best bar in the world. The negronis agree."},
+  {n:"Attaboy", cat:"Jazz & Cocktails", area:"Lower East Side", note:"No menu - tell them a mood and they build the drink."},
+  {n:"Bemelmans Bar", cat:"Jazz & Cocktails", area:"Upper East Side", note:"Murals, live piano, martinis at The Carlyle."},
+  // Free & romantic
+  {n:"Staten Island Ferry at sunset", cat:"Free & Romantic", area:"NY Harbor", note:"The best free cruise in America - Statue of Liberty included."},
+  {n:"The High Line at dusk", cat:"Free & Romantic", area:"Chelsea", note:"Gardens in the sky while the city lights come on."},
+  {n:"Brooklyn Heights Promenade", cat:"Free & Romantic", area:"Brooklyn Heights", note:"The skyline view that started a thousand proposals."},
+  {n:"Roosevelt Island Tramway", cat:"Free & Romantic", area:"Midtown East", note:"A gondola over the East River for the price of a subway swipe."},
+  {n:"Governors Island", cat:"Free & Romantic", area:"NY Harbor", note:"Ferry, hammocks, skyline. A mini vacation for a few dollars."},
+  {n:"Conservatory Garden, Central Park", cat:"Free & Romantic", area:"Fifth Ave & 105th", note:"The park's quietest, most beautiful corner."},
+  {n:"Socrates Sculpture Park", cat:"Free & Romantic", area:"Astoria", note:"Art on the waterfront, sunsets over Manhattan."},
+  // Class acts
+  {n:"La Mano Pottery", cat:"Class Act", area:"Chelsea", note:"Clay, two wheels, and the Ghost scene just waiting to happen."},
+  {n:"Murray's Cheese Classes", cat:"Class Act", area:"West Village", note:"Cheese and wine, taught by the city's most famous fromagerie."},
+  {n:"Trapeze School New York", cat:"Class Act", area:"Hudson River Park", note:"Catch each other mid-air. Literally."},
+  // The show tonight
+  {n:"Comedy Cellar", cat:"The Show Tonight", area:"Greenwich Village", note:"The most famous basement in comedy - legends drop in unannounced."},
+  {n:"The Moth StorySLAM", cat:"The Show Tonight", area:"Around the city", note:"True stories told live - laugh, cry, argue about the scores after."},
+  {n:"SOB's", cat:"The Show Tonight", area:"Hudson Square", note:"Live Latin, Afrobeat, and R&B - come ready to dance."},
+  // Sweet endings
+  {n:"Levain Bakery", cat:"Sweet Ending", area:"Upper West Side", note:"The cookie. You know the one."},
+  {n:"Serendipity 3", cat:"Sweet Ending", area:"Upper East Side", note:"Frozen hot chocolate, rom-com certified."},
+  {n:"Veniero's Pasticceria", cat:"Sweet Ending", area:"East Village", note:"Cannoli and cheesecake, open late since 1894."}
+];
+
+const fateBtn = document.getElementById('fateBtn');
+const spinOverlay = document.getElementById('spinOverlay');
+const spinCat = document.getElementById('spinCat');
+const spinName = document.getElementById('spinName');
+const spinSub = document.getElementById('spinSub');
+const spinNote = document.getElementById('spinNote');
+const spinAgain = document.getElementById('spinAgain');
+const spinGo = document.getElementById('spinGo');
+let spinTimer = null;
+
+function mapsLink(name){
+  return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(name + ' New York');
+}
+
+function runSpin(){
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  clearTimeout(spinTimer);
+  spinSub.textContent = 'Consulting the city\u2026';
+  spinCat.classList.add('empty');
+  spinNote.classList.add('empty');
+  spinGo.classList.add('hidden');
+  spinAgain.disabled = true;
+
+  const land = () => {
+    const pick = PICKS[Math.floor(Math.random() * PICKS.length)];
+    spinName.textContent = pick.n;
+    spinName.classList.remove('rolling');
+    spinCat.textContent = pick.cat;
+    spinCat.classList.remove('empty');
+    spinSub.textContent = pick.area;
+    spinNote.textContent = pick.note;
+    spinNote.classList.remove('empty');
+    spinGo.href = mapsLink(pick.n);
+    spinGo.classList.remove('hidden');
+    spinAgain.disabled = false;
+  };
+
+  if(reduced){ land(); return; }
+
+  spinName.classList.add('rolling');
+  let ticks = 0;
+  const total = 16 + Math.floor(Math.random() * 8);
+  function tick(){
+    ticks++;
+    spinName.textContent = PICKS[Math.floor(Math.random() * PICKS.length)].n;
+    if(ticks >= total){ land(); return; }
+    const remaining = total - ticks;
+    const delay = 60 + (remaining < 7 ? (7 - remaining) * 45 : 0);
+    spinTimer = setTimeout(tick, delay);
+  }
+  tick();
+}
+
+function openSpin(){
+  spinOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  runSpin();
+}
+function closeSpin(){
+  clearTimeout(spinTimer);
+  spinOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+fateBtn.addEventListener('click', openSpin);
+spinAgain.addEventListener('click', runSpin);
+document.getElementById('spinClose').addEventListener('click', closeSpin);
+spinOverlay.addEventListener('click', e => { if(e.target === spinOverlay) closeSpin(); });
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && spinOverlay.classList.contains('open')) closeSpin();
+});
+</script>
+</body>
+</html>
